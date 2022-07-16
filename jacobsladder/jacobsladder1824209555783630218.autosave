@@ -1,0 +1,82 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+final int SIZE_X = 400;
+final int SIZE_Y = 400;
+
+class Particle{
+    int posx = SIZE_X, posy = SIZE_Y, radius = 3;
+
+    Particle() { }
+
+    Particle(int posx, int posy) { this.posx = posx; this.posy = posy; }
+
+    void show(){
+        fill(255, 255, 255);
+        circle(posx--, posy, radius);
+        posy = ((int)random(-2, 2) == 0) ? 
+                (posy - (int)random(-1, 10)) : (posy + (int)random(-1, 10));
+    }
+}
+ //<>//
+class Bullet{
+    int posx = 0, posy = SIZE_Y / 2, radius = 10;
+    final static int MOVEMENT_SPEED = 3;
+    boolean isCollisionHappened = false;
+    List<Particle> particles = new ArrayList<>();
+
+    void show(){
+        if(posx >= SIZE_X || isCollisionHappened){
+            if(isCollisionHappened)
+            {
+                clear();
+                for(Particle particle : particles)
+                {
+                    particle.show(); //<>//
+                }
+                return;
+            }
+            else
+            {
+                isCollisionHappened = true;
+                int particleCount = (int) random(1, 7);
+                for(int i = 0; i < particleCount; i++){
+                    particles.add(new Particle(posx, posy));
+                }
+                return; //<>//
+            }
+        }
+
+        clear();
+        // fill(255);
+        circle(posx, posy, radius);
+        posx += MOVEMENT_SPEED;
+    }
+
+    void collision(){
+        fill(255, 255, 255);
+        circle(posx--, posy, 3);
+        posy = ((int)random(-1, 2) == 0) ? 
+                (posy - (int)random(-1, 2)) : (posy + (int)random(-1, 2));
+    }
+}
+
+void setup(){
+    size(400, 400);
+    background(0);
+    fill(255);
+    text("Hello World!", 10, 10);
+    
+    for(int i =0; i < 10; i++){
+        print((int)random(-2,2));
+    }
+}
+
+Bullet b = new Bullet();
+
+void draw(){
+    if(true){
+        b.show();
+    }
+}

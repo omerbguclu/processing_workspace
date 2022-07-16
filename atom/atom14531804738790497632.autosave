@@ -1,0 +1,67 @@
+class Electron{
+    int x = 50, y = 50, circle_width = 50;
+    int first_pos_x = 50, first_pos_y = 50;
+    int position = 0;
+    final static int radius = 50;
+    boolean turnflag = false;
+    
+    Electron(){}
+
+    Electron(int x, int y, int circle_width){
+        this.x = x;
+        this.y = y;
+        this.circle_width = circle_width;
+        first_pos_x = x;
+        first_pos_y = y;
+    }
+
+    void printToScreen(){
+        circle(x, y, calculateCircleWidth());
+        x = y = isNeedTurn() ? y + 1 : y - 1;
+    }
+
+    boolean isNeedTurn(){
+        if(!turnflag)
+        {
+            if(position++ == radius)
+            {
+                turnflag = true;
+            }
+            return true;
+        }
+
+        if(position-- == 0)
+        {
+            turnflag = false;
+            return false;
+        }
+
+        return false;
+    }
+
+    int calculateCircleWidth(){
+        if(position < radius / 2)
+        {
+            circle_width++;
+        }
+        else
+        {
+            circle_width--;
+        }
+
+        return circle_width;
+    }
+}
+
+Electron electron = new Electron();
+
+void setup(){
+    clear();
+    size(400, 400);
+    electron.printToScreen();
+}
+
+void draw(){
+    clear();
+    electron.printToScreen();
+}

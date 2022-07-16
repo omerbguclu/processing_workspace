@@ -1,0 +1,39 @@
+final int SIZE_X = 400;
+final int SIZE_Y = 400;
+
+class Bullet{
+    int posx = 0, posy = 50, radius = 10;
+    final static int MOVEMENT_SPEED = 3;
+    boolean isCollisionHappened = false;
+
+    void show(){
+        if(posx >= SIZE_X || isCollisionHappened){
+            isCollisionHappened = true;
+            collision();
+            return;
+        }
+
+        clear();
+        fill(255);
+        circle(posx, posy, radius);
+        posx += MOVEMENT_SPEED;
+    }
+
+    void collision(){
+        fill(255);
+        circle(posx--, random(-1, 1), 1);
+    }
+}
+
+void setup(){
+    size(400, 400);
+    background(0);
+    fill(255);
+    text("Hello World!", 10, 10);
+}
+
+Bullet b = new Bullet();
+
+void draw(){
+    b.show();
+}
